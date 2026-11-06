@@ -1,16 +1,16 @@
-package com.uc.ms_security.service;
+package com.devhytz.ms_security.service;
 
-import com.uc.ms_security.dto.user.CreateUserDTO;
-import com.uc.ms_security.dto.user.UpdateUserDTO;
-import com.uc.ms_security.dto.user.UserResponseDTO;
-import com.uc.ms_security.entity.User;
-import com.uc.ms_security.mapper.UserMapper;
-import com.uc.ms_security.repository.UserRepository;
+import com.devhytz.ms_security.dto.user.CreateUserDTO;
+import com.devhytz.ms_security.dto.user.UpdateUserDTO;
+import com.devhytz.ms_security.dto.user.UserResponseDTO;
+import com.devhytz.ms_security.entity.User;
+import com.devhytz.ms_security.exception.ApplicationException;
+import com.devhytz.ms_security.exception.ErrorCase;
+import com.devhytz.ms_security.mapper.UserMapper;
+import com.devhytz.ms_security.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ public class UserService {
 
     public UserResponseDTO create(CreateUserDTO dto) { // Llega el DTO de creacion
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, // Organizar esta linea
+            throw new ApplicationException(
+                    ErrorCase.ALREADY_EXISTS,
                     "Ya existe un usuario con este email"
             );
         }
@@ -51,9 +51,8 @@ public class UserService {
     private User findUser(Long id) {
 
         return userRepository.findById(id) // Se retorna el usuario, como se puede ver se retorna la entidad pero como el método es privado se va a usar en otro lado en donde si se convertira en DTO antes de ser expuesto.
-
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, // Organizar esta linea
+                .orElseThrow(() -> new ApplicationException(
+                        ErrorCase.NOT_FOUND,
                         "Usuario no encontrado"
                 ));
     }
@@ -70,8 +69,8 @@ public class UserService {
     public UserResponseDTO update(Long id, UpdateUserDTO dto) {
         User user = findUser(id); // Empleamos el método privado que trae la entidad
         if (userRepository.existsByEmailAndIdNot(dto.getEmail(), id)) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, // Organizar esta linea
+            throw new ApplicationException(
+                    ErrorCase.ALREADY_EXISTS,
                     "El email pertenece a otro usuario"
             );
         }
@@ -81,7 +80,7 @@ public class UserService {
     }
 
     // Eliminación del usuario
-    
+
     public void delete(Long id) {
         User user = findUser(id);
         userRepository.delete(user);

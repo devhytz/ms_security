@@ -1,6 +1,6 @@
-package com.uc.ms_security.repository;
+package com.devhytz.ms_security.repository;
 
-import com.uc.ms_security.entity.User;
+import com.devhytz.ms_security.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

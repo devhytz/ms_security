@@ -1,4 +1,4 @@
-package com.uc.ms_security.entity;
+package com.devhytz.ms_security.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.uc.ms_security.dto.user;
+package com.devhytz.ms_security.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

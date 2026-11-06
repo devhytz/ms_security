@@ -1,9 +1,9 @@
-package com.uc.ms_security.mapper;
+package com.devhytz.ms_security.mapper;
 
-import com.uc.ms_security.dto.user.CreateUserDTO;
-import com.uc.ms_security.dto.user.UpdateUserDTO;
-import com.uc.ms_security.dto.user.UserResponseDTO;
-import com.uc.ms_security.entity.User;
+import com.devhytz.ms_security.dto.user.CreateUserDTO;
+import com.devhytz.ms_security.dto.user.UpdateUserDTO;
+import com.devhytz.ms_security.dto.user.UserResponseDTO;
+import com.devhytz.ms_security.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class UserMapper {
     // se utilizaria para listar a todos en el frontend sin mostrar la contraseña
     // por eso se emplea el metodo toResponseDTO que es el que quita
     // la contraseña
-    
+
     public List<UserResponseDTO> toResponseDTOList(List<User> users) {
         return users.stream()
                 .map(this::toResponseDTO)
